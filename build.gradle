@@ -1,0 +1,43 @@
+allprojects {
+  task hello {
+doLast{
+println "I'm $task.project.name"
+}
+}//<< { task -> println "I'm $task.project.name" }
+}
+subprojects {
+
+apply plugin: "java"
+
+repositories{
+mavenCentral()
+	}
+}
+
+dependencies{
+
+ testCompile "junit:junit:4+"
+}
+
+project(':api'){
+
+dependencies {
+      compile project(':common')
+      compile 'org.apache.commons:commons-lang3:3.4'
+      compile 'org.apache.logging.log4j:log4j-core:2.6.2'
+   }
+}
+project(':app'){
+  dependencies {
+      compile project(':common'), project(':api')
+      compile 'org.apache.logging.log4j:log4j-core:2.6.2'
+   }
+}
+project(':common'){
+
+dependencies {
+    compile 'org.apache.commons:commons-lang3:3.4'
+  }
+}
+
+
